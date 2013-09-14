@@ -1,8 +1,7 @@
 #include "localnetwork.h"
 
 LocalNetwork::LocalNetwork(int compsCount):
-    currentId(0)
-  , compsCount(compsCount)
+    compsCount(compsCount)
 {
     connectSignalsFromComps();
 }

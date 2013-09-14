@@ -17,7 +17,6 @@ public:
     LocalNetwork(int compsCount);
 
 private:
-    int currentId;
     int compsCount;
     QList<Virus*> virusList;
     void send(int getterId, Program* sendingProgram);
