@@ -1,5 +1,5 @@
 #include "operatingsystem.h"
 
-OperatingSystem::OperatingSystem()
+/*OperatingSystem::OperatingSystem()
 {
-}
+}*/

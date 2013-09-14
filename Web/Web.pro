@@ -16,25 +16,25 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     computer.cpp \
     operatingsystem.cpp \
-    virus.cpp \
-    network.cpp \
-    localnetwork.cpp \
-    worldwideweb.cpp \
     linuxos.cpp \
     windowsos.cpp \
+    program.cpp \
     linuxvirus.cpp \
-    windowsvirus.cpp
+    windowsvirus.cpp \
+    localnetwork.cpp \
+    saver.cpp \
+    virus.cpp
 
 HEADERS  += mainwindow.h \
     computer.h \
     operatingsystem.h \
     virus.h \
-    network.h \
-    localnetwork.h \
-    worldwideweb.h \
     linuxos.h \
     windowsos.h \
+    program.h \
     linuxvirus.h \
-    windowsvirus.h
+    windowsvirus.h \
+    localnetwork.h \
+    saver.h
 
 FORMS    += mainwindow.ui

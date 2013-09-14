@@ -1,21 +1,21 @@
 #ifndef VIRUS_H
 #define VIRUS_H
 
-#include "computer.h"
+#include "qmath.h"
+#include "program.h"
 
-class Virus
+class Virus: public Program
 {
+
 public:
-    Virus(int myId, Computer myComputer);
+    enum {Type = 1};
+    int type() const { return Type; }
+    static const double probability;
+    virtual void activate(int compId) = 0;
+     void infectAroundLocal();
 
 protected:
-    int id;
-    Computer myComp;
-
-private:
-    void makeComputerIll();
-    void sendAcrossLocal(int virusId, int unluckyCompId);
-    void sendAcrossWeb(int virusId, int unluckyCompId);
+     void sendAcrossLocal(int unluckyCompId);
 };
 
 #endif // VIRUS_H

@@ -2,15 +2,19 @@
 #define LINUXVIRUS_H
 
 #include "virus.h"
+#include "linuxos.h"
 
 class LinuxVirus : public Virus
 {
 public:
-    LinuxVirus(int myId, Computer myComputer);
+    LinuxVirus();
+    enum {Type = 2};
+    int type() const { return Type; }
+    static const double probability = 0.01;
 
-private:
-    int id;
-    Computer myComp;
+    void activate(int compId);
+    void infectAroundLocal();
+     void sendAcrossLocal(int unluckyCompId);
 };
 
 #endif // LINUXVIRUS_H
