@@ -15,6 +15,11 @@ Computer::Computer(OperatingSystem *myOS, int id):
     setOS(myOS);
 }
 
+void Computer::addContactList(QList<int> contactNumbers)
+{
+    contactList = contactNumbers;
+}
+
 void Computer::setOS(OperatingSystem *os)
 {
     myOS = os;
@@ -68,7 +73,7 @@ void Computer::setProgram(Program *programForSet)
 
         myVirus = static_cast<Virus*>(programForSet);
         if (myVirus != NULL) {
-    //        infectProbability = Virus::probability;
+            infectProbability = myVirus->probability();
             myVirus->activate(myId);
         }
     }

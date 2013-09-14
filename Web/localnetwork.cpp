@@ -1,7 +1,7 @@
 #include "localnetwork.h"
 
-LocalNetwork::LocalNetwork(int compsCount):
-    compsCount(compsCount)
+LocalNetwork::LocalNetwork():
+    compsCount(0)
 {
     connectSignalsFromComps();
 }
@@ -29,8 +29,25 @@ void LocalNetwork::addComputerInNetwork(OperatingSystem *os, int newCompId)
     Saver::instance()->addComputer(os, newCompId);
 }
 
+void LocalNetwork::getLinksBetweenComps(QList<QString> startData)
+{
+    foreach (Computer* const comp, Saver::instance()->myCompList()) {
+        QList<int> connectedCompsNumbers;
+        QStringList numbersInString = startData[0].split(",");
+        while (!numbersInString.isEmpty()) {
+            connectedCompsNumbers.append(numbersInString[0].toInt());
+            numbersInString.removeAt(0);
+        }
+        comp->addContactList(connectedCompsNumbers);
+    }
+}
+
 void LocalNetwork::createNetwork()
 {
+    Data firstData;
+    QList<QString> startData = firstData.getStartData();
+    compsCount = startData[0].toInt();
+    startData.removeAt(0);
     OperatingSystem* os;
     for (int i = 0; i < compsCount; i++) {
         if (i % 2 == 0) {
@@ -41,6 +58,7 @@ void LocalNetwork::createNetwork()
         }
         addComputerInNetwork(os, i);
     }
+    getLinksBetweenComps(startData);
 }
 
 void LocalNetwork::createVirus()

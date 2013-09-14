@@ -2,6 +2,7 @@
 #define LOCALNETWORK_H
 
 #include <QObject>
+#include <QString>
 #include <QGraphicsItem>
 #include <QList>
 #include "saver.h"
@@ -9,12 +10,13 @@
 #include "windowsvirus.h"
 #include "linuxos.h"
 #include "windowsos.h"
+#include "data.h"
 
 class LocalNetwork: public QObject
 {
     Q_OBJECT
 public:
-    LocalNetwork(int compsCount);
+    LocalNetwork();
 
 private:
     int compsCount;
@@ -25,6 +27,7 @@ private:
     void addComputerInNetwork(OperatingSystem* os, int newCompId);
     void createNetwork();
     void createVirus();
+    void getLinksBetweenComps(QList<QString> startData);
 };
 
 #endif // LocalNetwork_H

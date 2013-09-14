@@ -22,6 +22,7 @@ public:
     bool amIConnectToLocal();
     void getFromLocalNetwork(Program* program);
     void infectIt();
+    void addContactList(QList<int> contactNumbers);
 
 public slots:
     void fromProgramToLocal(int compId, Program* message);

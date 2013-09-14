@@ -10,7 +10,7 @@ class Virus: public Program
 public:
     enum {Type = 1};
     int type() const { return Type; }
-    static const double probability;
+    virtual double probability() const = 0;
     virtual void activate(int compId) = 0;
      void infectAroundLocal();
 

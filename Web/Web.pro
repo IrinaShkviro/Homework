@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     windowsvirus.cpp \
     localnetwork.cpp \
     saver.cpp \
-    virus.cpp
+    virus.cpp \
+    data.cpp
 
 HEADERS  += mainwindow.h \
     computer.h \
@@ -35,6 +36,7 @@ HEADERS  += mainwindow.h \
     linuxvirus.h \
     windowsvirus.h \
     localnetwork.h \
-    saver.h
+    saver.h \
+    data.h
 
 FORMS    += mainwindow.ui

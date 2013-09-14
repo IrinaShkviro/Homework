@@ -10,7 +10,7 @@ public:
     LinuxVirus();
     enum {Type = 2};
     int type() const { return Type; }
-    static const double probability = 0.01;
+    double probability() const { return 0.01;}
 
     void activate(int compId);
     void infectAroundLocal();
