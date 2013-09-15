@@ -8,9 +8,7 @@ class LinuxVirus : public Virus
 {
 public:
     LinuxVirus();
-    enum {Type = 2};
-    int type() const { return Type; }
-    double probability() const { return 0.01;}
+    double probability() const { return 1;}
 
     void activate(int compId);
     void infectAroundLocal();

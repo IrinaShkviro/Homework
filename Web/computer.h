@@ -18,6 +18,7 @@ public:
     QList<int> contactList;
     QList<Program*> programList;
     OperatingSystem* myOS;
+    int returnId();
     bool amIIll();
     bool amIConnectToLocal();
     void getFromLocalNetwork(Program* program);
@@ -29,6 +30,7 @@ public slots:
 
 signals:
     void sendToLocal(int compId, Program* message);
+    void iWasInfected(int id);
 
 private:
     int myId;
@@ -42,7 +44,6 @@ private:
     void connectProgramsSignalsWithMySlots();
     void setProgram(Program* programForSet);
     void setOS(OperatingSystem* os);
-    void activateVirus();
     void infectAroundLocal();
 };
 

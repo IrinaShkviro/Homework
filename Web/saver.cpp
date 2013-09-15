@@ -1,5 +1,11 @@
 #include "saver.h"
 
+
+Saver::Saver():
+    computers(new QMap<int, Computer*>())
+{
+}
+
 Saver *Saver::instance()
 {
     static Saver* thisSaver;
@@ -14,12 +20,15 @@ Computer *Saver::returnCompById(int id)
     return instance()->computers->value(id);
 }
 
-void Saver::addComputer(OperatingSystem* os, int newCompId)
+void Saver::addComputer(Computer *comp)
 {
-    instance()->computers->insert(++currentId, new Computer(os, newCompId));
+    instance()->computers->insert(comp->returnId(), comp);
 }
 
 QList<Computer*> Saver::myCompList() const
 {
+    if (!instance()->computers) {
+        return QList<Computer*>();
+    }
     return instance()->computers->values();
 }

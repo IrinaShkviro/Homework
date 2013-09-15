@@ -18,7 +18,7 @@ void LinuxVirus::activate(int compId)
     Computer* myComp = Saver::instance()->returnCompById(myCompId);
     int randomCount = qrand() % int(1/probability());
     if (randomCount == int(1/(2*probability()))
-            && (myComp->myOS->type() == LinuxOS::Type)) {
+            && (myComp->myOS->isLinux())) {
         myComp->infectIt();
        infectAroundLocal();
     }

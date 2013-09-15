@@ -8,9 +8,7 @@ class WindowsVirus : public Virus
 {
 public:
     WindowsVirus();
-    enum {Type = 3};
-    int type() const { return Type; }
-    double probability() const { return 0.01; }
+    double probability() const { return 1; }
 
     void activate(int compId);
     void infectAroundLocal();

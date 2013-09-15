@@ -7,15 +7,14 @@
 class Saver
 {
 public:
+    Saver();
     static Saver* instance();
      Computer* returnCompById(int id);
-     void addComputer(OperatingSystem* os, int newCompId);
+     void addComputer(Computer* comp);
      QList<Computer*> myCompList() const;
 
 private:
- //   static Saver* thisSaver;
      QMap<int, Computer*>* computers;
-     int currentId;
 };
 
 #endif // SAVER_H

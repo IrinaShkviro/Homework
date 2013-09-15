@@ -15,6 +15,11 @@ Computer::Computer(OperatingSystem *myOS, int id):
     setOS(myOS);
 }
 
+int Computer::returnId()
+{
+    return myId;
+}
+
 void Computer::addContactList(QList<int> contactNumbers)
 {
     contactList = contactNumbers;
@@ -37,7 +42,11 @@ bool Computer::amIConnectToLocal()
 
 void Computer::infectIt()
 {
+    if (isIll) {
+        return;
+    }
     isIll = true;
+    emit iWasInfected(myId);
 }
 
 void Computer::infectAroundLocal()
@@ -69,8 +78,7 @@ void Computer::setProgram(Program *programForSet)
 {
     programList.append(programForSet);
     connect(programForSet, SIGNAL(sendToLocal(int, Program*)), this, SLOT(fromProgramToLocal(int,Program)));
-    if (programForSet->type() == Virus::Type) {
-
+    if (programForSet->isVirus()) {
         myVirus = static_cast<Virus*>(programForSet);
         if (myVirus != NULL) {
             infectProbability = myVirus->probability();

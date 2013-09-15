@@ -2,15 +2,29 @@
 
 LocalNetwork::LocalNetwork():
     compsCount(0)
+  , infectedCompsCount(0)
+  , expectForDownload(new QQueue<myMap>())
 {
-    connectSignalsFromComps();
+    createNetwork();
 }
 
-void LocalNetwork::connectSignalsFromComps()
+void LocalNetwork::update()
 {
-    foreach (Computer* const comp, Saver::instance()->myCompList()) {
-        connect(comp, SIGNAL(sendToLocal(int,Program*)), this, SLOT(send(int, Program)));
+    emit compsCountChanged(compsCount);
+}
+
+void LocalNetwork::sendToQueue(int getterId, Program *sendingProgram)
+{
+    expectForDownload->append(myMap(getterId, sendingProgram));
+}
+
+bool LocalNetwork::startDownload()
+{
+    if (expectForDownload->isEmpty()) {
+        return false;
     }
+    myMap currentDownload = expectForDownload->takeAt(0);
+    send(currentDownload.compId, currentDownload.program);
 }
 
 void LocalNetwork::send(int getterId, Program *sendingProgram)
@@ -24,9 +38,29 @@ void LocalNetwork::send(int getterId, Program *sendingProgram)
     Saver::instance()->returnCompById(getterId)->getFromLocalNetwork(sendingProgram);
 }
 
+void LocalNetwork::addInfectedComp(int compId)
+{
+    emit infectedCompsCountChanged(compId);
+}
+
+void LocalNetwork::tryToSendProgram()
+{
+    if (!expectForDownload) {
+        return;
+    }
+    if (expectForDownload->isEmpty()) {
+        return;
+    }
+    myMap progaramToSend = expectForDownload->takeFirst();
+    send(progaramToSend.compId, progaramToSend.program);
+}
+
 void LocalNetwork::addComputerInNetwork(OperatingSystem *os, int newCompId)
 {
-    Saver::instance()->addComputer(os, newCompId);
+    Computer* newComp = new Computer(os, newCompId);
+    connect(newComp, SIGNAL(sendToLocal(int,Program*)), this, SLOT(sendToQueue(int,Program*)));
+    connect(newComp, SIGNAL(iWasInfected(int)), this, SLOT(addInfectedComp(int)));
+    Saver::instance()->addComputer(newComp);
 }
 
 void LocalNetwork::getLinksBetweenComps(QList<QString> startData)
@@ -42,11 +76,21 @@ void LocalNetwork::getLinksBetweenComps(QList<QString> startData)
     }
 }
 
+void LocalNetwork::changeCompsCount(int count)
+{
+    compsCount = count;
+    emit compsCountChanged(compsCount);
+}
+
 void LocalNetwork::createNetwork()
 {
     Data firstData;
     QList<QString> startData = firstData.getStartData();
-    compsCount = startData[0].toInt();
+    if (startData.isEmpty()) {
+        emit noStartData();
+        return;
+    }
+    changeCompsCount(startData[0].toInt());
     startData.removeAt(0);
     OperatingSystem* os;
     for (int i = 0; i < compsCount; i++) {
@@ -61,13 +105,24 @@ void LocalNetwork::createNetwork()
     getLinksBetweenComps(startData);
 }
 
-void LocalNetwork::createVirus()
+Virus *LocalNetwork::createVirus()
 {    
     int randomCount = qrand();
     if (randomCount % 2 == 0) {
-        virusList.append(new LinuxVirus());
+        return new LinuxVirus();
     }
     else {
-        virusList.append(new WindowsVirus());
+        return new WindowsVirus();
     }
+}
+
+void LocalNetwork::pushVirusInRandomComp()
+{
+    if (compsCount == 0) {
+        return;
+    }
+    int randomComp =  qrand() % (compsCount - 1) - 1;
+    Virus* virusForRandomComp = createVirus();
+    myMap newCouple(randomComp, virusForRandomComp);
+    expectForDownload->append(newCouple);
 }

@@ -40,3 +40,6 @@ HEADERS  += mainwindow.h \
     data.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    Datas.qrc

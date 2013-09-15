@@ -8,9 +8,8 @@ class Program: public QObject
 {
     Q_OBJECT
 public:
-    enum {Type = 5};
-    int type() const { return Type; }
      void activate(int compId);
+     virtual bool isVirus() { return false;}
 
 signals:
     void sendToLocal(int compId, Program* message);

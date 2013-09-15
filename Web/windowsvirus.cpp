@@ -18,7 +18,7 @@ void WindowsVirus::activate(int compId)
     Computer* myComp = Saver::instance()->returnCompById(myCompId);
     int randomCount = qrand() % int(1/probability());
     if (randomCount == int(1/(2*probability()))
-            && myComp->myOS->type() == WindowsOS::Type) {
+            && myComp->myOS->isWindows()) {
         myComp->infectIt();
         infectAroundLocal();
     }

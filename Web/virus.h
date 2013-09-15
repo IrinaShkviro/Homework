@@ -12,6 +12,7 @@ public:
     int type() const { return Type; }
     virtual double probability() const = 0;
     virtual void activate(int compId) = 0;
+    virtual bool isVirus() {return true;}
      void infectAroundLocal();
 
 protected:

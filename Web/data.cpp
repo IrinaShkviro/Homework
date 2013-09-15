@@ -16,7 +16,7 @@ QList<QString> Data::getStartData()
 
 void Data::readFile()
 {
-    QFile fileForReading("forRead.txt");
+    QFile fileForReading(":/startData.txt");
     if (!fileForReading.open(QIODevice::ReadOnly)) {
         return;
     }
