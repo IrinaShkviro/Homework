@@ -19,5 +19,6 @@ int main(int argc, char *argv[])
     myNet->update();
 
     a.exec();
+    delete myNet;
     return 0;
 }
