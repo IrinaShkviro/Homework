@@ -38,6 +38,8 @@ signals:
     void noStartData();
     void compsCountChanged(int newCompsCount);
     void infectedCompsCountChanged(int justInfectedCompId);
+    void success(bool isSuccess);
+    void triedToInfect(int);
 
 private:
     int infectedCompsCount;

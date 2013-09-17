@@ -40,6 +40,7 @@ void LocalNetwork::send(int getterId, Program *sendingProgram)
 
 void LocalNetwork::addInfectedComp(int compId)
 {
+    emit success(true);
     emit infectedCompsCountChanged(compId);
 }
 
@@ -60,6 +61,7 @@ void LocalNetwork::addComputerInNetwork(OperatingSystem *os, int newCompId)
     Computer* newComp = new Computer(os, newCompId);
     connect(newComp, SIGNAL(sendToLocal(int,Program*)), this, SLOT(sendToQueue(int,Program*)));
     connect(newComp, SIGNAL(iWasInfected(int)), this, SLOT(addInfectedComp(int)));
+    connect(newComp, SIGNAL(triedToInfect(int)), this, SIGNAL(triedToInfect(int)));
     Saver::instance()->addComputer(newComp);
 }
 
@@ -109,9 +111,11 @@ Virus *LocalNetwork::createVirus()
 {    
     int randomCount = qrand();
     if (randomCount % 2 == 0) {
+        emit success(true);
         return new LinuxVirus();
     }
     else {
+        emit success(true);
         return new WindowsVirus();
     }
 }

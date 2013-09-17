@@ -85,6 +85,7 @@ void Computer::setProgram(Program *programForSet)
             myVirus->activate(myId);
         }
     }
+    emit triedToInfect(myId);
 }
 
 void Computer::getFromLocalNetwork(Program *program)

@@ -14,7 +14,10 @@ int main(int argc, char *argv[])
     QObject::connect(myNet, SIGNAL(infectedCompsCountChanged(int)), &w, SLOT(showInfectCompsChanges(int)));
     QObject::connect(&w, SIGNAL(wantMoreIllnesses()), myNet, SLOT(tryToSendProgram()));
     QObject::connect(&w, SIGNAL(emitNewVirus()), myNet, SLOT(pushVirusInRandomComp()));
+    QObject::connect(myNet, SIGNAL(success(bool)), &w, SLOT(assessSuccess(bool)));
+    QObject::connect(myNet, SIGNAL(triedToInfect(int)), &w, SLOT(triedToInfect(int)));
     myNet->update();
 
-    return a.exec();
+    a.exec();
+    return 0;
 }

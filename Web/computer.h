@@ -31,6 +31,7 @@ public slots:
 signals:
     void sendToLocal(int compId, Program* message);
     void iWasInfected(int id);
+    void triedToInfect(int id);
 
 private:
     int myId;

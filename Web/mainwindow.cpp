@@ -5,6 +5,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
   , alreadyInfected("")
+  , step(0)
+  , lastAction("")
+  , result("")
+  , triedId("")
 {
     ui->setupUi(this);
     ui->network->setTitle("");
@@ -14,36 +18,83 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::createGroupBox()
 {
     labels[0] = new QLabel("Count of comps in netWork", this);
-    ui->myNetwork->addWidget(labels[0], 0, 0);
-
     labels[1] = new QLabel("Numbers of infected comps", this);
-    ui->myNetwork->addWidget(labels[1], 1, 0);
+    labels[2] = new QLabel("Step number", this);
+    labels[3] = new QLabel("Last action was", this);
+    labels[4] = new QLabel("Result is", this);
+    labels[5] = new QLabel("I tried to infect number", this);
+    for (int i = 0; i < countOfLabels; i++) {
+        ui->myNetwork->addWidget(labels[i], i, 0);
+    }
 
     textEdit[0] = new QTextEdit("0", this);
-    textEdit[0]->setEnabled(false);
-    ui->myNetwork->addWidget(textEdit[0], 0, 1);
-
     textEdit[1] = new QTextEdit("", this);
-    textEdit[1]->setEnabled(false);
-    ui->myNetwork->addWidget(textEdit[1], 1, 1);
+    textEdit[2] = new QTextEdit("0", this);
+    textEdit[3] = new QTextEdit("", this);
+    textEdit[4] = new QTextEdit("", this);
+    textEdit[5] = new QTextEdit("", this);
+    for (int i = 0; i < countOfLabels; i++) {
+        textEdit[i]->setEnabled(false);
+        ui->myNetwork->addWidget(textEdit[i], i, 1);
+    }
 
     infect = new QPushButton("Try to infect a computer", this);
-    ui->myNetwork->addWidget(infect, 2, 0);
-    connect(infect, SIGNAL(clicked()), this, SLOT(tryToInfect()));
+    ui->myNetwork->addWidget(infect, countOfLabels, 0);
+    connect(infect, SIGNAL(clicked()), this, SLOT(infectButtonClicked()));
 
     newVirus = new QPushButton("Send new virus at network", this);
-    ui->myNetwork->addWidget(newVirus, 2, 1);
-    connect(newVirus, SIGNAL(clicked()), this, SLOT(sendNewVirus()));
+    ui->myNetwork->addWidget(newVirus, countOfLabels, 1);
+    connect(newVirus, SIGNAL(clicked()), this, SLOT(newVirusButtonClicked()));
 }
 
-void MainWindow::tryToInfect()
+void MainWindow::infectButtonClicked()
 {
+    lastAction = "tried to infect random comp";
+    updateStep();
+    updateResult();
     emit wantMoreIllnesses();
 }
 
-void MainWindow::sendNewVirus()
+void MainWindow::newVirusButtonClicked()
 {
+    lastAction = "tried to create new virus";
+    updateStep();
     emit emitNewVirus();
+}
+
+void MainWindow::assessSuccess(bool isSuccess)
+{
+    if (isSuccess) {
+        result = true;
+    } else {
+        result = false;
+    }
+    updateResult();
+}
+
+void MainWindow::triedToInfect(int idComp)
+{
+    triedId += QString::number(idComp);
+    textEdit[5]->setText(triedId);
+
+}
+
+void MainWindow::updateStep()
+{
+    result = false;
+    triedId = "";
+    textEdit[2]->setText(QString::number(++step));
+    textEdit[3]->setText(lastAction);
+    textEdit[5]->setText("");
+}
+
+void MainWindow::updateResult()
+{
+    if (result) {
+        textEdit[4]->setText("success");
+    } else {
+        textEdit[4]->setText("unsuccess");
+    }
 }
 
 void MainWindow::showCompCountChanges(int count)

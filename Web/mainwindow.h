@@ -22,8 +22,10 @@ public:
 public slots:
     void showCompCountChanges(int count);
     void showInfectCompsChanges(int justInfectedId);
-    void tryToInfect();
-    void sendNewVirus();
+    void infectButtonClicked();
+    void newVirusButtonClicked();
+    void assessSuccess(bool isSuccess);
+    void triedToInfect(int idComp);
 
 signals:
     void wantMoreIllnesses();
@@ -31,13 +33,20 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    QLabel* labels[2];
-    QTextEdit* textEdit[2];
+    const int countOfLabels = 6;
+    QLabel* labels[6];
+    QTextEdit* textEdit[6];
     QPushButton* infect;
     QPushButton* newVirus;
     QString alreadyInfected;
+    int step;
+    QString lastAction;
+    QString triedId;
+    bool result;
 
     void createGroupBox();
+    void updateStep();
+    void updateResult();
 };
 
 #endif // MAINWINDOW_H
