@@ -10,9 +10,8 @@ Computer::Computer(OperatingSystem *myOS, int id):
   , isConnectToLocal(true)
   , myId(id)
   , infectProbability(0)
+  , myOS(myOS)
 {
-    connectProgramsSignalsWithMySlots();
-    setOS(myOS);
 }
 
 int Computer::returnId()
@@ -23,11 +22,6 @@ int Computer::returnId()
 void Computer::addContactList(QList<int> contactNumbers)
 {
     contactList = contactNumbers;
-}
-
-void Computer::setOS(OperatingSystem *os)
-{
-    myOS = os;
 }
 
 bool Computer::amIIll()
@@ -49,16 +43,6 @@ void Computer::infectIt()
     emit iWasInfected(myId);
 }
 
-void Computer::infectAroundLocal()
-{
-    if (!amIConnectToLocal()) {
-        return;
-    }
-    for (int i = 0; i < contactList.size(); i++) {
-        sendAcrossLocal(myVirus, contactList[i]);
-    }
-}
-
 void Computer::connectToLocal()
 {
     isConnectToLocal = true;
@@ -67,11 +51,6 @@ void Computer::connectToLocal()
 void Computer::disconnectToLocal()
 {
     isConnectToLocal = false;
-}
-
-void Computer::sendAcrossLocal(Program *message, int getterId)
-{
-    emit sendToLocal(getterId, message);
 }
 
 void Computer::setProgram(Program *programForSet)
@@ -91,13 +70,6 @@ void Computer::setProgram(Program *programForSet)
 void Computer::getFromLocalNetwork(Program *program)
 {
     setProgram(program);
-}
-
-void Computer::connectProgramsSignalsWithMySlots()
-{
-    for (int i = 0; i < programList.size(); i++) {
-        connect(programList.at(i), SIGNAL(sendToLocal(int, Program*)), this, SLOT(fromProgramToLocal(int,Program)));
-    }
 }
 
 void Computer::fromProgramToLocal(int compId, Program *message)

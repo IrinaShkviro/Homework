@@ -1,11 +1,12 @@
 #ifndef OPERATINGSYSTEM_H
 #define OPERATINGSYSTEM_H
 
+/**
+ * @brief The OperatingSystem class - interface for operation system
+ */
 class OperatingSystem
 {
 public:
-    enum {Type = 13};
-    int type() const { return Type; }
     virtual bool isLinux() {return false;}
     virtual bool isWindows() {return false;}
     static const int virusProbability;

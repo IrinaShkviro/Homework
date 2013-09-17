@@ -7,11 +7,6 @@ WindowsVirus::WindowsVirus()
 {
 }
 
-void WindowsVirus::sendAcrossLocal(int unluckyCompId)
-{
-      emit sendToLocal(unluckyCompId, this);
-}
-
 void WindowsVirus::activate(int compId)
 {
     myCompId = compId;
@@ -31,6 +26,6 @@ void WindowsVirus::infectAroundLocal()
         return;
     }
     for (int i = 0; i < myComp->contactList.size(); i++) {
-        sendAcrossLocal(myComp->contactList[i]);
+        emit sendToLocal(myComp->contactList[i], this);
     }
 }

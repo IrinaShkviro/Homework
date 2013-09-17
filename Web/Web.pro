@@ -15,15 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     computer.cpp \
-    operatingsystem.cpp \
     linuxos.cpp \
     windowsos.cpp \
-    program.cpp \
     linuxvirus.cpp \
     windowsvirus.cpp \
     localnetwork.cpp \
     saver.cpp \
-    virus.cpp \
     data.cpp
 
 HEADERS  += mainwindow.h \

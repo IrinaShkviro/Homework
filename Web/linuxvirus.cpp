@@ -7,11 +7,6 @@ LinuxVirus::LinuxVirus()
 {
 }
 
-void LinuxVirus::sendAcrossLocal(int unluckyCompId)
-{
-      emit sendToLocal(unluckyCompId, this);
-}
-
 void LinuxVirus::activate(int compId)
 {
     myCompId = compId;
@@ -31,6 +26,6 @@ void LinuxVirus::infectAroundLocal()
         return;
     }
     for (int i = 0; i < myComp->contactList.size(); i++) {
-        sendAcrossLocal(myComp->contactList[i]);
+        emit sendToLocal(myComp->contactList[i], this);
     }
 }
