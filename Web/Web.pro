@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,7 +34,10 @@ HEADERS  += mainwindow.h \
     windowsvirus.h \
     localnetwork.h \
     saver.h \
-    data.h
+    data.h \
+    computertest.h \
+    datatest.h \
+    savertest.h
 
 FORMS    += mainwindow.ui
 

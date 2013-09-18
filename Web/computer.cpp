@@ -56,7 +56,7 @@ void Computer::disconnectToLocal()
 void Computer::setProgram(Program *programForSet)
 {
     programList.append(programForSet);
-    connect(programForSet, SIGNAL(sendToLocal(int, Program*)), this, SLOT(fromProgramToLocal(int,Program)));
+    connect(programForSet, SIGNAL(sendToLocal(int, Program*)), this, SLOT(fromProgramToLocal(int,Program*)));
     if (programForSet->isVirus()) {
         myVirus = static_cast<Virus*>(programForSet);
         if (myVirus != NULL) {

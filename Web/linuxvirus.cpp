@@ -11,6 +11,9 @@ void LinuxVirus::activate(int compId)
 {
     myCompId = compId;
     Computer* myComp = Saver::instance()->returnCompById(myCompId);
+    if (!myComp) {
+        return;
+    }
     int randomCount = qrand() % int(1/probability());
     if (randomCount == int(1/(2*probability()))
             && (myComp->myOS->isLinux())) {

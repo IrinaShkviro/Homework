@@ -74,7 +74,7 @@ void MainWindow::assessSuccess(bool isSuccess)
 
 void MainWindow::triedToInfect(int idComp)
 {
-    triedId += QString::number(idComp);
+    triedId += QString::number(idComp + 1);
     textEdit[5]->setText(triedId);
 
 }
