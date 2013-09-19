@@ -14,6 +14,7 @@ private slots:
     void initTestCase()
     {
         emptyComp = new Computer();
+        pass = "";
     }
 
     void cleanupTestCase()
@@ -46,17 +47,30 @@ private slots:
         QVERIFY(emptyComp->amIIll() == true);
     }
 
-    void connectToLocalTest()
-    {
-        Computer* comp = new Computer(new LinuxOS(), 4);
-        QVERIFY(comp->amIConnectToLocal() == true);
-    }
-
     void getFromLocalTest()
     {
         Program* newProgram = new LinuxVirus();
         emptyComp->getFromLocalNetwork(newProgram);
         QVERIFY(emptyComp->programList.at(0) == newProgram);
+    }
+
+    void checkGetFromLocalSignal()
+    {
+        pass = "getFromLocalSignalTest";
+    }
+
+    void getFromLocalSignalTest()
+    {
+        QEventLoop loop;
+        connect(emptyComp, SIGNAL(triedToInfect(int)), this, SLOT(checkGetFromLocalSignal()));
+        emptyComp->getFromLocalNetwork(new LinuxVirus());
+        QVERIFY(pass == "getFromLocalSignalTest");
+    }
+
+    void connectToLocalTest()
+    {
+        Computer* comp = new Computer(new LinuxOS(), 4);
+        QVERIFY(comp->amIConnectToLocal() == true);
     }
 
     void addContactListTest()
@@ -69,4 +83,5 @@ private slots:
 
 private:
     Computer* emptyComp;
+    QString pass;
 };

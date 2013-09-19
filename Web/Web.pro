@@ -37,7 +37,9 @@ HEADERS  += mainwindow.h \
     data.h \
     computertest.h \
     datatest.h \
-    savertest.h
+    savertest.h \
+    localnetworktest.h \
+    mainwindowtest.h
 
 FORMS    += mainwindow.ui
 
