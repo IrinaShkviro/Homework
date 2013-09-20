@@ -74,7 +74,7 @@ void MainWindow::assessSuccess(bool isSuccess)
 
 void MainWindow::triedToInfect(int idComp)
 {
-    triedId += QString::number(idComp + 1);
+    triedId += QString::number(idComp);
     textEdit[5]->setText(triedId);
 
 }
@@ -106,10 +106,10 @@ void MainWindow::showCompCountChanges(int count)
 void MainWindow::showInfectCompsChanges(int justInfectedId)
 {
     if (alreadyInfected.isEmpty()) {
-        alreadyInfected += QString::number(justInfectedId + 1);
+        alreadyInfected += QString::number(justInfectedId);
     }
     else {
-        alreadyInfected += "," + QString::number(justInfectedId + 1);
+        alreadyInfected += "," + QString::number(justInfectedId);
     }
     textEdit[1]->setText(alreadyInfected);
 }

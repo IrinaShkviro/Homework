@@ -102,6 +102,8 @@ signals:
 private:
     int infectedCompsCount;
     int compsCount;
+    int step;
+    const int compsToInfectId[8] = {1, 2, 4, 3, 5, 4, 2, 1};
     QQueue<myMap>* expectForDownload;
 
     /**

@@ -3,14 +3,10 @@
 #include <QObject>
 #include "localnetwork.h"
 #include "data.h"
-#include "mainwindowtest.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindowTest test;
-    QTest::qExec(&test);
-   /* QApplication a(argc, argv);
     MainWindow w;
     w.show();
     LocalNetwork* myNet = new LocalNetwork();
@@ -23,6 +19,6 @@ int main(int argc, char *argv[])
     myNet->update();
 
     a.exec();
-    delete myNet;*/
+    delete myNet;
     return 0;
 }

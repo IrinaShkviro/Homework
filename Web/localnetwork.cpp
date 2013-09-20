@@ -4,6 +4,7 @@ LocalNetwork::LocalNetwork():
     compsCount(0)
   , infectedCompsCount(0)
   , expectForDownload(new QQueue<myMap>())
+  , step(0)
 {
     createNetwork();
 }
@@ -69,7 +70,7 @@ void LocalNetwork::getLinksBetweenComps(QList<QString> startData)
 {
     foreach (Computer* const comp, Saver::instance()->myCompList()) {
         QList<int> connectedCompsNumbers;
-        QStringList numbersInString = startData[0].split(",");
+        QStringList numbersInString = startData[comp->returnId() - 1].split(",");
         while (!numbersInString.isEmpty()) {
             connectedCompsNumbers.append(numbersInString[0].toInt());
             numbersInString.removeAt(0);
@@ -102,15 +103,15 @@ void LocalNetwork::createNetwork()
         else {
             os = new WindowsOS();
         }
-        addComputerInNetwork(os, i);
+        addComputerInNetwork(os, i + 1);
     }
     getLinksBetweenComps(startData);
 }
 
 Virus *LocalNetwork::createVirus()
-{    
-    int randomCount = qrand();
-    if (randomCount % 2 == 0) {
+{
+    step += 1;
+    if (step % 2 == 0) {
         emit success(true);
         return new LinuxVirus();
     }
@@ -125,7 +126,7 @@ void LocalNetwork::pushVirusInRandomComp()
     if (compsCount == 0) {
         return;
     }
-    int randomComp =  qrand() % (compsCount - 1) - 1;
+    int randomComp =  compsToInfectId[step % 8];
     Virus* virusForRandomComp = createVirus();
     myMap newCouple(randomComp, virusForRandomComp);
     expectForDownload->append(newCouple);
