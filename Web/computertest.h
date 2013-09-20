@@ -61,7 +61,6 @@ private slots:
 
     void getFromLocalSignalTest()
     {
-        QEventLoop loop;
         connect(emptyComp, SIGNAL(triedToInfect(int)), this, SLOT(checkGetFromLocalSignal()));
         emptyComp->getFromLocalNetwork(new LinuxVirus());
         QVERIFY(pass == "getFromLocalSignalTest");
