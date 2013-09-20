@@ -2,6 +2,7 @@
 
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
+#include <QApplication>
 
 #include "mainwindow.h"
 
