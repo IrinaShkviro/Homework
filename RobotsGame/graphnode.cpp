@@ -3,9 +3,9 @@
 GraphNode::GraphNode(int number):
     myNumber(number)
   , myNodeType(neither)
-  , contacts(new QList<int>())
   , busy(false)
 {
+    contacts.clear();
 }
 
 GraphNode::TypeOfNode GraphNode::returnType()
@@ -28,14 +28,13 @@ void GraphNode::changeTypeOfNode(GraphNode::TypeOfNode newType)
         return;
     }
     myNodeType = both;
-    emit success();
 }
 
 void GraphNode::addContacts(QString contactLine)
 {
     QStringList nodesInString = contactLine.split(",");
     while (!nodesInString.isEmpty()) {
-        contacts->append(nodesInString[0].toInt());
+        contacts.append(nodesInString[0].toInt());
         nodesInString.removeAt(0);
     }
 }

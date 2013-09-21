@@ -8,6 +8,8 @@ QT       += core
 
 QT       -= gui
 
+QT       += testlib
+
 TARGET = RobotsGame
 CONFIG   += console
 CONFIG   -= app_bundle

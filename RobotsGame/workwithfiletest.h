@@ -25,6 +25,7 @@ private slots:
 
     void startLine0Test()
     {
+        startData = myFile->getStartData();
         QVERIFY(startData.at(0) == "6");
     }
 

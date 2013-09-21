@@ -1,8 +1,7 @@
 #include "graph.h"
 
 Graph::Graph():
-    robotsDestroy(false)
-  , myNodes(new QList<GraphNode*>())
+    myNodes(new QList<GraphNode*>())
   , myNodesCount(0)
   , serviceNode(new GraphNode(0))
   , currentType(serviceNode->neither)
@@ -33,11 +32,6 @@ bool Graph::assessResult()
     return true;
 }
 
-void Graph::theEnd()
-{
-    robotsDestroy = true;
-}
-
 void Graph::createGraph()
 {
     WorkWithFile* myFile = new WorkWithFile();
@@ -51,7 +45,6 @@ void Graph::createGraph()
         GraphNode* curNode = new GraphNode(i + 1);
         myNodes->append(curNode);
     }
-    connectEndSignals();
     for (int i = 0; i < myNodesCount; i++) {
         if (data.isEmpty()) {
             break;
@@ -63,44 +56,29 @@ void Graph::createGraph()
     }
     QStringList robotsInString = data[0].split(",");
     while (!robotsInString.isEmpty()) {
-        myNodes->at(robotsInString.takeAt(0).toInt())->changeBusy(true);
+        myNodes->at(robotsInString.takeAt(0).toInt() - 1)->changeBusy(true);
     }
 }
 
 void Graph::markTypeOfNodes()
 {
-    myNodes->takeAt(0)->changeTypeOfNode(serviceNode->odd);
-    currentType = serviceNode->odd;
+    myNodes->at(0)->changeTypeOfNode(serviceNode->odd);
     QList<int> path;
-    path.append(0);
     markContacts(0, path);
 }
 
 void Graph::markContacts(int nodeNumber, QList<int> path)
 {
-    if (robotsDestroy) {
-        return;
-    }
-    if (currentType == serviceNode->odd) {
-        currentType = serviceNode->even;
-    } else {
-        currentType = serviceNode->odd;
-    }
+    changeCurrentType();
     myNodes->at(nodeNumber)->changeTypeOfNode(currentType);
     if (path.contains(nodeNumber)) {
+        changeCurrentType();
         return;
     }
-    for (int i = 0; i < myNodes->at(nodeNumber)->contacts->size(); i++) {
-        int contactNumber = myNodes->at(nodeNumber)->contacts->at(i);
-        path.append(nodeNumber);
+    path.append(nodeNumber);
+    for (int i = 0; i < myNodes->at(nodeNumber)->contacts.size(); i++) {
+        int contactNumber = myNodes->at(nodeNumber)->contacts.at(i) - 1;
         markContacts(contactNumber, path);
-    }
-}
-
-void Graph::connectEndSignals()
-{
-    for (int i = 0; i < myNodes->size(); i++) {
-        connect(myNodes->at(i), SIGNAL(success()), this, SLOT(theEnd()));
     }
 }
 
@@ -115,12 +93,25 @@ void Graph::countNodesOfEachType()
         {
             case GraphNode::odd:
                 oddCount++;
+                break;
             case GraphNode::even:
                 evenCount++;
+                break;
             case GraphNode::both:
                 bothCount++;
+                break;
             case GraphNode::neither:
                 neitherCount++;
+                break;
         }
+    }
+}
+
+void Graph::changeCurrentType()
+{
+    if (currentType == serviceNode->odd) {
+        currentType = serviceNode->even;
+    } else {
+        currentType = serviceNode->odd;
     }
 }
