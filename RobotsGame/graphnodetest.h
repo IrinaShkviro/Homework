@@ -1,0 +1,4 @@
+#ifndef GRAPHNODETEST_H
+#define GRAPHNODETEST_H
+
+#endif // GRAPHNODETEST_H
