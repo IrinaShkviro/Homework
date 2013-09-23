@@ -8,6 +8,8 @@ QT       += core
 
 QT       -= gui
 
+QT       += testlib
+
 TARGET = ZeroInArray
 CONFIG   += console
 CONFIG   -= app_bundle
@@ -15,4 +17,9 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    calculator.cpp
+
+HEADERS += \
+    calculator.h \
+    calculatortest.h

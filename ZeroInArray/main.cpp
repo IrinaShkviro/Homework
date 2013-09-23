@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include "stdio.h"
+#include "calculator.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,13 +15,8 @@ int main(int argc, char *argv[])
         scanf("%f", &cur);
         array[i] = cur;
     }
-    int result = 0;
-    for (int i = 0; i < size; i++) {
-        if (array[i] == 0) {
-            result++;
-        }
-    }
-    printf("\n%s%d", "amount of zero elements in this array = ", result);
+    Calculator* myCalc = new Calculator();
+    printf("\n%s%d", "amount of zero elements in this array = ", myCalc->calculateZeroElements(array, size));
 
     return a.exec();
 }
